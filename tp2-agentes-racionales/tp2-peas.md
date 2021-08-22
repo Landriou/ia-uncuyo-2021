@@ -10,6 +10,7 @@
 
 
 | Agente | Performance Measure | Enviroment | Actuators | Sensors |
+| --- | --- | --- | --- | --- |
 | Jugar al CS| Cantidad de Asesinatos, cantidad de objetivos cumplidos, cantidad de bases capturadas | Mapas del videojuego, entorno de computadora, armas conocidas, habilidades conocidas | Mouse, teclado, computadora | Monitor, Auriculares, parlantes |
 | Explorar los osceanos | Cantidad de zonas exploradas | Planeta tierra, mas puntualmente, las costas y los mares, peces, corales y en general fauna y flora de los oceanos | motores que ayuden a desplazar, display, linternas| camaras, sensores de presion |
 | Comprar y vender tokens crypto| cantidad de dinero obtenido | cantidad de capitalización del mercado, otras monedas, metodos de inversion  | | display de monedas y planes de inversion | sensor del precio en el mercado |

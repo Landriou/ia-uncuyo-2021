@@ -3,6 +3,7 @@ Agente normal
 
 
 | Dimensión\Porcentaje de Suciedad | 0.1 | 0.2 | 0.4 | 0.8 |
+| --- | --- | --- | --- | --- |
 | 2x2 | 1 | 1 | 2 | 4 |
 | 4x4 | 2 | 4 | 7 | 13 |
 | 8x8 | 7 | 13 | 21 | 49 |
@@ -13,6 +14,7 @@ Agente normal
 
 Agente Random
 | Dimensión\Porcentaje de Suciedad | 0.1 | 0.2 | 0.4 | 0.8 |
+| --- | --- | --- | --- | --- |
 | 2x2 | 1 | 1 | 2 | 4 |
 | 4x4 | 2 | 4 | 7 | 13 |
 | 8x8 | 4 | 12 | 19 | 44 |
