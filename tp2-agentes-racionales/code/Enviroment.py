@@ -53,7 +53,3 @@ class Enviroment:
     def get_dirty_percentage(self, dirtyPlaces):
         spaces = self.number_of_columns * self.number_of_rows
         return dirtyPlaces / spaces
-    
-    
-    def accept_action(self,action):
-        print("hola") 
