@@ -5,6 +5,7 @@
 |Media	| 4639.387097 |3794.258065 | 4639.387097|
 
 ## Grafico de barras
+![image](https://user-images.githubusercontent.com/39389586/131274456-657b14ba-d696-4da7-8781-407e7fcc5763.png)
 
 ## Pregunta C
 C)  Cuál de los 3 algoritmos considera más adecuado para resolver el problema planteado en A)?. Justificar la respuesta.
