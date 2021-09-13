@@ -21,21 +21,22 @@ class GeneticAgent:
             states = states + 1
             new_population = LinkedList()
             population = self.killTheWorst(population)
-            while length(new_population) < size//2:
-                x = self.randomSelection(population)
-                y = self.randomSelection(population)
-                child = self.reproduce(x,y)
-                if randint(0,100) > 60:
-                    self.mutate(child)
-                child.calculateH()
-                fitness = child.calculateHObjetive()
-                if fitness < bestFitness:
-                    bestFitness = fitness
-                    self.envMaximoLocal = child
-                if fitness == 0:
-                    return self.envMaximoLocal, states
-                add(new_population, child)
-                
+            while length(new_population) < size:
+                x = self.bestSelection(population)
+                for i in range(size//4):
+                    y = self.randomSelection(population)
+                    child = self.reproduce(x,y)
+                    if randint(0,100) > 60:
+                        self.mutate(child)
+                    child.calculateH()
+                    fitness = child.calculateHObjetive()
+                    if fitness < bestFitness:
+                        bestFitness = fitness
+                        self.envMaximoLocal = child
+                    if fitness == 0:
+                        return self.envMaximoLocal, states
+                    add(new_population, child)
+
             population = new_population
                 
         return self.envMaximoLocal, states
@@ -46,7 +47,19 @@ class GeneticAgent:
         rand = randint(0, length(population) - 1)
         return access(population, rand)
         
-        
+    def bestSelection(self, population):
+        bestEnv = None
+        bestFitness = 999
+        currentNode = population.head
+        while currentNode != None:
+            env = currentNode.value
+            env.calculateH()
+            fitness = env.calculateHObjetive()
+            if fitness < bestFitness:
+                bestFitness = fitness
+                bestEnv = env
+            currentNode = currentNode.nextNode
+        delete(population, bestEnv)
         return bestEnv
     def killTheWorst(self, population):
         currentNode = population.head
@@ -104,9 +117,9 @@ class GeneticAgent:
                 columnQueen.representation_letter = "\u25A0 "
                 break
             ## cambio la reina
-            bestNewNode.isQueen = True
-            bestNewNode.representation_letter = "\u2655 "
-            bestNewNode.HasBeenChoosed = True
+        bestNewNode.isQueen = True
+        bestNewNode.representation_letter = "\u2655 "
+        bestNewNode.HasBeenChoosed = True
            
     def findTheBestPlaceToSwitch(self, env):
         minH = 999
