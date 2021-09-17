@@ -43,6 +43,7 @@ class SimulatedAnnealingAgent:
             #calculo H devuelta
             newEnviroment.calculateH()
             newTargetFunction = newEnviroment.calculateHObjetive()
+            
             if newTargetFunction == 0:
                 return newEnviroment, states
             ## Si es mejor lo piso sobre el enviroment y voy a otra iteracion ese objeto
