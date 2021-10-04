@@ -43,3 +43,13 @@ b) Gracias a la explicación anterior, siempre y cuando el grafo de restriccione
 
 
 ## 6) Graficos de cajas
+![image](https://user-images.githubusercontent.com/39389586/135791289-51a5080e-7f55-4783-bb2f-bf7c08548812.png)
+
+![image](https://user-images.githubusercontent.com/39389586/135791305-cedad591-5883-49c3-a2f3-a60b09275a25.png)
+
+![image](https://user-images.githubusercontent.com/39389586/135791317-d81a4b44-650d-4c2c-995a-a5bd23da1b0d.png)
+
+![image](https://user-images.githubusercontent.com/39389586/135791328-3c2b9f85-8fb0-48a5-a314-0074ef794c67.png)
+
+
+
