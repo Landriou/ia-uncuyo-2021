@@ -13,14 +13,17 @@ trainset <- arbolado
 
 
 
-trainIndex <- createDataPartition(as.factor(trainset$inclinacion_peligrosa), p=0.80, list=FALSE)
+trainIndex <- createDataPartition(as.factor(trainset$inclinacion_peligrosa), p=0.5714, list=FALSE)
 data_train <- trainset[ trainIndex,]
 data_test <-  trainset[-trainIndex,]
-
+data_train
+#2046
 indexes <- which(data_train$inclinacion_peligrosa == 0)
-eliminatedData <- sample(indexes, length(indexes) - 2864)
+eliminatedData <- sample(indexes, length(indexes) - 4018)
 # equlibrate the majority class 
 new_data_train <- data_train[-eliminatedData,]
+majorityClassDataframe <-new_data_train %>% group_by(inclinacion_peligrosa) %>% summarise(total=n())
+majorityClassDataframe
 # add circ cat to predict for a nominal value instead of a numeric value
 data_train_with_circ_cat <- new_data_train %>% mutate(circ_tronco_cm_cat = ifelse(`circ_tronco_cm` <= 50,'bajo',
                                                                             ifelse(`circ_tronco_cm` > 50 & `circ_tronco_cm` <= 100, 'medio',
@@ -34,7 +37,7 @@ data_test_with_circ_cat <-  data_test %>% mutate(circ_tronco_cm_cat = ifelse(`ci
 data_filtered <- subset(data_train_with_circ_cat, select = -c(ultima_modificacion, long, lat,circ_tronco_cm ,area_seccion, nombre_seccion, seccion))
 data_test_filtered <- subset(data_test_with_circ_cat, select = -c(ultima_modificacion, long, lat,circ_tronco_cm ,area_seccion, nombre_seccion, seccion))
 
-
+#rpart
 
 train_formula<-formula(inclinacion_peligrosa~altura+
                          especie+
@@ -42,13 +45,13 @@ train_formula<-formula(inclinacion_peligrosa~altura+
 )
 
 # generamos el modelo 
-tree_model<-rpart(train_formula,data=data_train)
+tree_model<-rpart(train_formula,data=data_filtered, method = "class")
 tree_model
 # obtenemos la predicción
-p<-predict(tree_model,data_test,type='class') 
-
-
-
+p<-predict(tree_model,data_test_filtered,type='class') 
+p
+caret::confusionMatrix(p,as.factor(data_test_filtered$inclinacion_peligrosa))
+write.csv(p,"result.csv")
 
 #randon forest
 rfmodel <- randomForest(inclinacion_peligrosa~altura+
@@ -61,9 +64,10 @@ rfmodel
 data_filtered
 data_test_filtered
 
-predictions<-predict(rfmodel,data_test_filtered,type='class')
+predictions<-predict(rfmodel,data_filtered,type='response')
 predictions
-caret::confusionMatrix(predictions,data_test_filtered$inclinacion_peligrosa)
+caret::confusionMatrix(predictions,data_filtered$inclinacion_peligrosa)
+
 
 
 
