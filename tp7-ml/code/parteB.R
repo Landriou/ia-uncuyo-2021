@@ -10,20 +10,29 @@ library(randomForest)
 #1
 arbolado <- read_csv("../data/arbolado-mza-dataset.csv")
 trainset <- arbolado
+arbolado_test <- read_csv("../data/arbolado-mza-dataset-test.csv")
 
 
+#trainIndex <- createDataPartition(as.factor(trainset$inclinacion_peligrosa), p=0.5, list=FALSE)
+#data_train <- trainset[ trainIndex,]
+#data_test <-  trainset[-trainIndex,]
+data_train <- arbolado
+data_test <- arbolado_test
 
-trainIndex <- createDataPartition(as.factor(trainset$inclinacion_peligrosa), p=0.5714, list=FALSE)
-data_train <- trainset[ trainIndex,]
-data_test <-  trainset[-trainIndex,]
-data_train
-#2046
+majorityClassDataframe <-data_train %>% group_by(inclinacion_peligrosa) %>% summarise(total=n())
+majorityClassDataframe
+
+
 indexes <- which(data_train$inclinacion_peligrosa == 0)
-eliminatedData <- sample(indexes, length(indexes) - 4018)
+eliminatedData <- sample(indexes, length(indexes) - 3579)
 # equlibrate the majority class 
 new_data_train <- data_train[-eliminatedData,]
+
+
 majorityClassDataframe <-new_data_train %>% group_by(inclinacion_peligrosa) %>% summarise(total=n())
 majorityClassDataframe
+
+
 # add circ cat to predict for a nominal value instead of a numeric value
 data_train_with_circ_cat <- new_data_train %>% mutate(circ_tronco_cm_cat = ifelse(`circ_tronco_cm` <= 50,'bajo',
                                                                             ifelse(`circ_tronco_cm` > 50 & `circ_tronco_cm` <= 100, 'medio',
@@ -50,8 +59,23 @@ tree_model
 # obtenemos la predicción
 p<-predict(tree_model,data_test_filtered,type='class') 
 p
-caret::confusionMatrix(p,as.factor(data_test_filtered$inclinacion_peligrosa))
+
+#caret::confusionMatrix(p,as.factor(data_test_filtered$inclinacion_peligrosa))
 write.csv(p,"result.csv")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #randon forest
 rfmodel <- randomForest(inclinacion_peligrosa~altura+
