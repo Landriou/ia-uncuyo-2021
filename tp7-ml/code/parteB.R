@@ -13,9 +13,6 @@ trainset <- arbolado
 arbolado_test <- read_csv("../data/arbolado-mza-dataset-test.csv")
 
 
-#trainIndex <- createDataPartition(as.factor(trainset$inclinacion_peligrosa), p=0.5, list=FALSE)
-#data_train <- trainset[ trainIndex,]
-#data_test <-  trainset[-trainIndex,]
 data_train <- arbolado
 data_test <- arbolado_test
 
@@ -27,10 +24,6 @@ indexes <- which(data_train$inclinacion_peligrosa == 0)
 eliminatedData <- sample(indexes, length(indexes) - 3579)
 # equlibrate the majority class 
 new_data_train <- data_train[-eliminatedData,]
-
-
-majorityClassDataframe <-new_data_train %>% group_by(inclinacion_peligrosa) %>% summarise(total=n())
-majorityClassDataframe
 
 
 # add circ cat to predict for a nominal value instead of a numeric value
@@ -62,87 +55,6 @@ p
 
 #caret::confusionMatrix(p,as.factor(data_test_filtered$inclinacion_peligrosa))
 write.csv(p,"result.csv")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#randon forest
-rfmodel <- randomForest(inclinacion_peligrosa~altura+
-                                   circ_tronco_cm_cat+
-                                   especie+
-                                   diametro_tronco , data = data_filtered)
-
-
-rfmodel
-data_filtered
-data_test_filtered
-
-predictions<-predict(rfmodel,data_filtered,type='response')
-predictions
-caret::confusionMatrix(predictions,data_filtered$inclinacion_peligrosa)
-
-
-
-
-#caret
-
-
-ctrl_fast <- trainControl(method="cv", 
-                          number=4, 
-                          verboseIter=T,
-                          classProbs=F,
-                          allowParallel = TRUE)  
-train_formula<-formula(inclinacion_peligrosa~altura+
-                         circ_tronco_cm_cat+
-                         especie+
-                         diametro_tronco
-)
-
-model_caret<- train(train_formula,
-                    data = data_filtered,
-                    method = "rf",
-                    trControl = ctrl_fast)
-
-
-preds <- predict(model_caret,data_test_filtered)
-confusionMatrix(preds,as.factor(data_test_filtered$inclinacion_peligrosa))
-
-
-truePositive <- validation_with_clasiffiers %>% filter(inclinacion_peligrosa == 1 & prediction_class == 1)
-trueNegative <- validation_with_clasiffiers %>% filter(inclinacion_peligrosa == 0 & prediction_class == 0)
-falsePositive <- validation_with_clasiffiers %>% filter(inclinacion_peligrosa == 0 & prediction_class == 1)
-falseNegative <- validation_with_clasiffiers %>% filter(inclinacion_peligrosa == 1 & prediction_class == 0)
-
-truePositivesNumber <- nrow(truePositive)
-trueNegativesNumber <- nrow(trueNegative)
-falsePositivesNumber <- nrow(falsePositive)
-falseNegativesNumber <- nrow(falseNegative)
-truePositivesNumber
-trueNegativesNumber
-falsePositivesNumber
-falseNegativesNumber
-
-
-sensitivity1 <- truePositivesNumber / (truePositivesNumber + falseNegativesNumber)
-specificity1 <- trueNegativesNumber / (trueNegativesNumber + falsePositivesNumber)
-precision1 <- truePositivesNumber / (truePositivesNumber + falsePositivesNumber)
-accuracy1 <- (truePositivesNumber + trueNegativesNumber ) / ( truePositivesNumber + trueNegativesNumber +falsePositivesNumber + falseNegativesNumber)
-
-sensitivity1
-specificity1
-precision1
-accuracy1
 
 
 
