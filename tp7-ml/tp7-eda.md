@@ -36,3 +36,6 @@ Si, la especie mas peligrosa es la morera, se muestra en el siguiente grafico
 # Histograma de frecuencia circ_tronco_cm bins 10 separado por inclinacion peligrosa
 
 <img width="581" alt="10binsconfilter" src="https://user-images.githubusercontent.com/39389586/139076066-b9786fb6-4b1a-43a7-9ff0-c76d022de862.png">
+
+el csv pedido en el punto d se encuentra dentro de la carpeta data
+
