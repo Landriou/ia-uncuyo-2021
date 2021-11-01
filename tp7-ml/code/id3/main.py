@@ -1,5 +1,3 @@
-
-from linkedlist import LinkedList, add
 import time
 #\u265E
 #\u25A1 black square
